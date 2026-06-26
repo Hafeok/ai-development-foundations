@@ -1,0 +1,38 @@
+# Two Pillars framework registry
+#
+# One entry per framework. Schema:
+#
+#   - name:            human-readable framework name
+#     repository:      URL of the framework's own repo
+#     pillars:         [specification] | [execution] | [specification, execution]
+#     coverage:        free-text — which layers/blocks are covered
+#     conformance:     URL of the framework's published conformance statement
+#     foundation_ref:  commit/tag of ai-development-foundations the statement was checked against
+#     maintainer:      name or handle
+#     license:         framework's license
+#
+# Listing records a SELF-DECLARED claim. It is not an endorsement.
+# Add your entry alphabetically within its pillar group.
+
+frameworks: []
+
+# --- Example entries (illustrative; remove when real adoptions land) ---
+#
+# frameworks:
+#   - name: Decision-Driven Design
+#     repository: https://github.com/EXAMPLE/decision-driven-design
+#     pillars: [specification]
+#     coverage: What (feature specs) · How (ADRs) · SPMC (prepared bundles)
+#     conformance: https://github.com/EXAMPLE/decision-driven-design/blob/main/CONFORMANCE.md
+#     foundation_ref: v1.0.0
+#     maintainer: example
+#     license: Apache-2.0
+#
+#   - name: Assembly Line Protocol
+#     repository: https://github.com/EXAMPLE/assembly-line-protocol
+#     pillars: [execution]
+#     coverage: all eight building blocks; Level 4 transition contract
+#     conformance: https://github.com/EXAMPLE/assembly-line-protocol/blob/main/CONFORMANCE.md
+#     foundation_ref: v1.0.0
+#     maintainer: example
+#     license: Apache-2.0
