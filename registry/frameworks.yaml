@@ -14,7 +14,15 @@
 # Listing records a SELF-DECLARED claim. It is not an endorsement.
 # Add your entry alphabetically within its pillar group.
 
-frameworks: []
+frameworks:
+  - name: The Product Framework
+    repository: https://github.com/Hafeok/product-framework
+    pillars: [specification]
+    coverage: "What (systems · domain model · event model · Decider/Projector) · How (decisions/contracts · repository layout model · screen-composition) · SPMC (frozen by-value work units; Model axis out of scope at the Build seam)"
+    conformance: https://github.com/Hafeok/product-framework/blob/main/CONFORMANCE.md
+    foundation_ref: 13b0cb4
+    maintainer: Hafeok
+    license: Apache-2.0 (code) / CC BY 4.0 (docs)
 
 # --- Example entries (illustrative; remove when real adoptions land) ---
 #
