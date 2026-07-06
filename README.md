@@ -30,10 +30,16 @@ ACTUAL IMPLEMENTATIONS    project specs, running pipelines      most volatile
         depends on
 FRAMEWORK IMPLEMENTATIONS your methodology / your pipeline      evolves
         depends on
+SHARED CONTRACTS          the seam schemas both frameworks use  stable
+        depends on
 FOUNDATION                this repository                       most stable
 ```
 
+The **shared contracts** tier holds the concrete schemas that cross the seam between a specification framework and an execution framework — depended on by both, so by the Stable Dependency Principle it sits beneath both and above the foundation it instantiates. It lives in its own repository, [ai-development-contracts](https://github.com/Hafeok/ai-development-contracts).
+
 This repo is the **foundation layer** of both pillars. It defines the standard; it does not prescribe tooling, methodology, or format. Frameworks depend on it. Projects depend on frameworks. The foundation does not churn.
+
+This ordering is not arbitrary — it follows from three design principles that govern the whole repository: the **Stable Dependency Principle**, **Loose Coupling**, and **High Cohesion**. They decide where each concern lives, what may depend on what, and where the boundaries fall. See [The three design principles](foundations/00-two-pillars.md#the-three-design-principles).
 
 ---
 

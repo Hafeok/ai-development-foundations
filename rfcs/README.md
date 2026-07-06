@@ -33,3 +33,5 @@ Accepted RFCs are never deleted — they are the changelog of the foundations' r
 |-----|-------|--------|--------|
 | [0001](0001-seam-ownership.md) | The seam between the pillars is owned by the producing pillar | both | accepted |
 | [0002](0002-spmc-axis-precision.md) | Each SPMC axis must be pinned to the precision at which it affects output | specification | accepted |
+| [0003](0003-design-principles.md) | The three design principles governing the foundation | both | accepted |
+| [0004](0004-seam-pattern.md) | The seam pattern — new domains add seams, not pillars | both | accepted |

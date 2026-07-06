@@ -16,6 +16,22 @@ These are different problems with different owners, different failure modes, and
 
 ---
 
+## The three design principles
+
+Everything in this repository, and everything built on it, is governed by three principles. They are not specific to AI development — they are long-standing principles of sound system structure — but applied here they decide three things that otherwise get decided by accident: where a concern lives, what may depend on what, and where the boundaries between parts fall. The layer model, the independence of the pillars, and the ownership of the seam are all consequences of these three. When a later decision is in question, it is settled by asking which arrangement these principles require.
+
+**Stable Dependency Principle — dependencies point toward stability.** A thing may depend only on things at least as stable as itself. The volatile depends on the stable, never the reverse. This is what orders the layers: actual implementations (most volatile) depend on framework implementations, which depend on the foundation (most stable), which depends on nothing below it. The principle is also a *diagnostic*: if a stable thing is forced to change because a volatile thing changed, a dependency is pointing the wrong way and the structure is wrong.
+
+A direct consequence governs anything two parties **share**. If a specification framework and an execution framework both depend on a shared artifact — the schemas that cross the seam between them — that artifact is depended upon by both, so by this principle it must be *more stable than either*. It therefore cannot live inside one of them: were the shared contract housed inside the specification framework, the execution framework would depend on the specification framework, binding their lifecycles and destroying the swappability the pillars exist to provide. A shared contract must sit on its own layer **beneath both** dependents, versioning independently of each. (Who *authors* the contract's shape is a separate question, settled by producer-owns; see "Who owns the seam." Authorship is directional; dependency is downward. The two do not conflict — one says who writes it, the other says where it sits.)
+
+**Loose Coupling — parts interact through the narrowest possible declared surface.** Across a boundary, two parts share only what they must, and they share it as *data*, not as a live connection. The seam between the pillars is the example: two schemas and two emit-points, no shared store, no shared endpoint, no callbacks. The freeze is the decoupling — once a unit is handed over it is self-contained, and neither side holds a reference into the other's interior. Loose coupling is what makes a part replaceable: the fewer assumptions a part makes about another's internals, the more freely either can be rebuilt.
+
+**High Cohesion — each part owns exactly one concern, and owns it wholly.** Within a boundary, everything that changes together lives together, and things that change for different reasons live apart. Specification and execution are separate pillars because they are separate concerns with separate reasons to change; fusing them (a single artifact that is both intent and method) is a cohesion failure. Inside specification, What, How, and SPMC stay distinct for the same reason. Cohesion is the test for whether a boundary is in the right place: if one concern is smeared across two parts, or two concerns are tangled in one, the boundary is wrong.
+
+The three work as a set. Cohesion decides *what belongs together* (where boundaries fall); loose coupling decides *how the resulting parts interact* (through narrow data surfaces); the stable dependency principle decides *which way the dependencies between them point* (toward stability). Get cohesion wrong and the parts are mis-cut; get coupling wrong and they cannot be replaced; get dependency direction wrong and a change anywhere forces a change everywhere. Together they are why this repository is a stable foundation that frameworks depend on, rather than a framework other things must work around.
+
+---
+
 ## Pillar one: specification
 
 The specification pillar governs the *input* to AI work. Its foundation is the Specification Framework, which defines what any specification must contain — regardless of format or methodology — for an LLM to produce correct, complete, verifiable output.
@@ -76,6 +92,20 @@ The practical test: replace the executor with different hardware and a different
 
 ---
 
+## The seam pattern
+
+The seam between specification and execution turned out not to be a one-off. The same discipline recurs wherever a specification framework hands frozen intent to a peer framework in another domain — an interface builder, a flow compiler, any consumer that acts on specification. The foundation therefore names the **seam pattern** once, so each new instance is a recognized application rather than a new invention:
+
+1. **A frozen artifact crosses outbound, by value.** Self-contained; the consumer resolves nothing by calling back. The freeze is the decoupling.
+2. **A self-describing event crosses back.** Reconcilable by a consumer that never observed the emission; attributable to the immutable input by content hash.
+3. **The producer holds no knowledge of any consumer.** The return path is an event, not a push or a pull.
+4. **Producer-owns applies.** The side that freezes and hands over authors the artifact's shape; the consuming side conforms (and may publish its own self-description — a capability manifest — where pre-flight matching matters).
+5. **The instance lives at a contracts tier** — above this foundation, beneath both frameworks that share it — per the Stable Dependency Principle.
+
+The consequence for the shape of the whole: **a new domain adds a seam, not a pillar.** The pillars are two because the fundamental problems are two — getting intent in, and acting without losing control. Frameworks multiply, seams multiply; the pillar count does not. A specification framework is the hub with a published socket per seam: execution on one side, interface or other domains on others — each socket a foundation-patterned, contracts-tier, two-way seam.
+
+---
+
 ## How the pillars relate to the autonomy ladder
 
 There is a ladder of AI autonomy. Each rung removes a category of per-action human involvement. The two pillars carry different weight at different rungs.
@@ -98,7 +128,7 @@ The pattern across the ladder is clear. The specification pillar is what gets a 
 
 The complete picture is two foundations, each implemented in three layers, supporting a climb up the autonomy ladder.
 
-Each pillar follows the same stability discipline: the foundation is the most stable layer and changes rarely; framework implementations evolve more often; actual implementations are the most volatile. Dependencies point downward, toward stability. A project depends on a framework; a framework depends on a foundation; a foundation depends on nothing below it.
+Each pillar follows the same stability discipline: the foundation is the most stable layer and changes rarely; framework implementations evolve more often; actual implementations are the most volatile. Dependencies point downward, toward stability, by the Stable Dependency Principle. A project depends on a framework; a framework depends on a foundation; a foundation depends on nothing below it.
 
 This is why the foundations are written to be technology-neutral and tool-agnostic. They are the part that must not churn. Decision-Driven Design can evolve its feature-spec format without disturbing the Specification Framework beneath it. The Assembly Line Protocol can revise its station schema without disturbing the Execution Contract beneath it. And a team can switch framework implementations entirely — or bring a customer's own — without either foundation changing, because the foundations define the standard, not the implementation.
 
