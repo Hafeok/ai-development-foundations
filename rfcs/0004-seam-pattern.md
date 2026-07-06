@@ -28,7 +28,7 @@ State the five properties of a conforming seam (frozen-by-value outbound; self-d
 
 ## Impact on conformance
 
-None retroactive. The Build-seam checklists in ai-development-contracts already satisfy the pattern. Future seam instances (e.g. the Reification Contract) declare conformance in their own contracts-tier repos against this pattern.
+None retroactive. The Build-seam checklists in ai-development-contracts already satisfy the pattern. Further seam instances declare conformance in their own contracts-tier repos against this pattern — the first, the **Reification seam** (UIIntent / ReificationReport), is now specified and released in [ai-development-contracts v0.3.0](https://github.com/Hafeok/ai-development-contracts/releases/tag/v0.3.0), housed at the same contracts tier as the Build seam rather than in this foundation, exactly as this RFC requires.
 
 ## Stability justification
 
@@ -42,3 +42,10 @@ Additive naming of a discipline two working instances already follow (Build seam
 ## Open questions
 
 Whether the pattern's optional consumer self-description (capability manifest) should be mandatory for all seams is left to each instance; the Build seam made it normative, the Reification seam may adopt an analog when pre-flight matching matters there.
+
+## References
+
+Instances of this pattern, housed at the contracts tier:
+
+- **Build seam** (specification ⟷ execution) — [WorkUnit](https://github.com/Hafeok/ai-development-contracts/blob/main/contracts/work-unit.md), [VerdictEvent](https://github.com/Hafeok/ai-development-contracts/blob/main/contracts/verdict-event.md), [CapabilityManifest](https://github.com/Hafeok/ai-development-contracts/blob/main/contracts/capability-manifest.md).
+- **Reification seam** (specification ⟷ interface) — [UIIntent](https://github.com/Hafeok/ai-development-contracts/blob/main/contracts/ui-intent.md), [ReificationReport](https://github.com/Hafeok/ai-development-contracts/blob/main/contracts/reification-report.md). Released in [ai-development-contracts v0.3.0](https://github.com/Hafeok/ai-development-contracts/releases/tag/v0.3.0).
